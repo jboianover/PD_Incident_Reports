@@ -14,6 +14,6 @@ This project ingests data from a JSONL file, performs transformations, and inser
 1. Clone this repository:
 
    ```bash
-   git clone <[repository_url](https://github.com/jboianover/PD_Incident_Reports.git)https://github.com/jboianover/PD_Incident_Reports.git>
+   git clone https://github.com/jboianover/PD_Incident_Reports.git)https://github.com/jboianover/PD_Incident_Reports.git
    cd pd_incident_reports
    docker-compose up -d
