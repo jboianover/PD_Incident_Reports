@@ -1,6 +1,5 @@
-import os
 import pandas as pd
-import psycopg2
+from sqlalchemy import create_engine
 
 
 def _read_jsonl(file):
@@ -11,15 +10,14 @@ def _read_jsonl(file):
 
 
 def _transform_df(df):
-    pass
+    return df
 
 
 def _load_data(df, database_url):
     try:
-        conn = psycopg2.connect(database_url)
+        engine = create_engine(database_url)
         # Insert data into the database
-        df.to_sql('your_table_name', conn, if_exists='replace', index=False)
-
+        df.to_sql('crime_reports', engine, if_exists='replace', index=False)
     except Exception as e:
         print(f"Error: {e}")
 
@@ -28,7 +26,9 @@ def _load_data(df, database_url):
 
 def process_and_insert_data():
     # Read the DATABASE_URL environment variable
-    database_url = os.environ.get("DATABASE_URL")
+    # database_url = os.environ.get("DATABASE_URL")
+    database_url = 'postgresql://admin:admin@localhost:5433/PD_Incidents'
+    print(database_url)
 
     # Specify path/filename of source data file
     file_path = 'sf_crime_reports.jsonl'
