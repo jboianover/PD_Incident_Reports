@@ -21,32 +21,34 @@ This project ingests data from a JSONL file, performs transformations, and inser
 
 ## Considerations for this project
 
-### Project Goales:
+### Project Goals:
 1. Analyze historical crime data from 2018-01-01 to 2018-09-24 (~111K rows).
 2. Support analytical queries involving filtering and aggregations.
 3. Optimize query performance to ensure they execute efficiently, even as the dataset grows.
 
-### Model design approach:
-1. Since the data volume is moderate, starting with a flat table structure seems a reasonable choice because it simplifies
-   data loading and mantainance and is suitable for straightforward queries like the requested ones for this challenge.
+### Model design decisions:
+Since the data volume is moderate, I decided to start with a flat table structure approach as an MVP for initial delivery.
+This seems a reasonable choice as it simplifies the process of data loading and its complexity and maintenance.
+It is suitable, as well, for straightforward analytical queries like the requested ones for this challenge.
 
-2. Analyzing the dataset I could infer its volume would be evolving over time, so I'm applying some optimization techniques
-   such as indexing to improve query performance.
-   
-3. I've considered creating a star schema but it has some downsides I think are not worth to carry with on this context:
+Analyzing the dataset I inferred its volume might evolve over time, so on this approach, I will be applying
+some optimization techniques such as indexing by some columns and selecting according data types to improve query performance.
+
+#### Other alternatives   
+I've considered creating a star schema but it has some downsides I don't think are worth it in this context:
    - Adds complexity to the database schema.
-   - Require more complex logic on ETL processes to load and mantain dimension tables.
-   - May have some overhead in terms of storage and mantainance.
+   - Require more complex logic on ETL processes to load and maintain dimension tables.
+   - May have some overhead in terms of storage and maintenance.
    
-3. A potential approach for this work would be to choose a hybrid solution:
-   Initially, load the data into the flat table and periodically update dimensions such as time, location, incident 
-   which would allow us to strike a balance between simplicity and performance. Over time, assesing query performance
-   we could consider transitioning to a star schema if query complexity and dataset size increase significantly.
+Another potential approach to this work, if we had some more time and consider it necessary, would be to choose
+a hybrid solution:
+   Initially, loading the data into the flat table and periodically updating dimensions such as time, location, and incident 
+   which would allow us to achieve a balance between simplicity and performance. Over time, when evaluating query performance,
+   we might consider transitioning to a star schema if query complexity and dataset size increase significantly.
    
 #### Conclusions:
-The flat table approach with some optimization techniques, overall, provides a well balanced solution with:
-   - delivery time
-   - data loading complexity
-   - initial volume of data
-   - straightforward queries to solve the requested analytical reports
-   - performant data loading and querying
+The flat table approach with some optimization techniques provide a well-balanced solution as an MVP considering:
+   - delivery time of the project
+   - data loading complexity, performance and maintenance
+   - initial volume of data which is moderate
+   - straightforward queries to solve the requested analytical reports in a performant way
