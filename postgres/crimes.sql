@@ -1,5 +1,5 @@
 CREATE TABLE crimes (
-    row_id INT PRIMARY KEY,  -- Unique identifier for each row
+    row_id BIGINT PRIMARY KEY,  -- Unique identifier for each row
     incident_id INT,           -- System-generated identifier for incident reports
     incident_number INT,       -- Case number for the incident
     cad_number INT,            -- Computer Aided Dispatch number
@@ -28,7 +28,7 @@ CREATE TABLE crimes (
 );
 
 -- Index for incident_id (Primary Key)
-CREATE UNIQUE INDEX idx_incident_id ON crimes (incident_id);
+CREATE INDEX idx_incident_id ON crimes (incident_id);
 
 -- Index for incident_datetime
 CREATE INDEX idx_incident_datetime ON crimes (incident_datetime);

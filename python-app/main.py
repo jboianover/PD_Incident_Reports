@@ -42,26 +42,23 @@ def _read_jsonl(file_path):
 
 
 def _transform_df(df):
-    null_handling_cols = ['analysis_neighborhood', 'cad_number', 'supervisor_district',
-                          'filed_online']
-    for col in null_handling_cols:
-        df[col].replace(['', 'null'], np.nan, inplace=True)
-    # df['cad_number'].replace(['', 'null'], np.nan, inplace=True)
-    # df['filed_online'].replace('', 'false', inplace=True)
+    # Clean up of empty or 'null' string values to be null in the table
+    df = df.replace(['', 'null'], np.nan)
+    # Re-ordering columns to match the order of the table to then optimize the insert
     df = df[['row_id', 'incident_id', 'incident_number', 'cad_number', 'incident_datetime',
              'incident_date', 'incident_time', 'incident_year', 'incident_day_of_week',
              'report_datetime', 'report_type_code', 'report_type_description', 'filed_online',
              'incident_code', 'incident_category', 'incident_subcategory', 'incident_description',
              'resolution', 'intersection', 'cnn', 'police_district', 'analysis_neighborhood',
              'supervisor_district', 'latitude', 'longitude', 'point']]
-
     return df
 
 
 def _load_data(df, database_url):
     try:
+        # Create PostgresSQL connection
         engine = create_engine(database_url)
-        # Insert data into the database
+        # Insert data into the crimes table in the database
         df.to_sql('crimes', engine, if_exists='append', index=False)
     except Exception as e:
         print(f"Error: {e}")
@@ -71,7 +68,6 @@ def _load_data(df, database_url):
 
 def process_and_insert_data():
     # Read the DATABASE_URL environment variable
-    # database_url = os.environ.get("DATABASE_URL")
     database_url = 'postgresql://admin:admin@localhost:5433/PD_Incidents'
     print(database_url)
 

@@ -1,0 +1,11 @@
+{
+    "database_url": "postgresql://admin:admin@localhost:5433/PD_Incidents",
+    "file_name": "sf_crime_reports.jsonl",
+    "table_name": "crimes",
+    "table_columns": ["row_id", "incident_id", "incident_number", "cad_number", "incident_datetime",
+             "incident_date", "incident_time", "incident_year", "incident_day_of_week",
+             "report_datetime", "report_type_code", "report_type_description", "filed_online",
+             "incident_code", "incident_category", "incident_subcategory", "incident_description",
+             "resolution", "intersection", "cnn", "police_district", "analysis_neighborhood",
+             "supervisor_district", "latitude", "longitude", "point"]
+}
