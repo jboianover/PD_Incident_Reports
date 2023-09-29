@@ -1,3 +1,6 @@
+-- Install PostGIS extension (if not already installed)
+CREATE EXTENSION IF NOT EXISTS postgis;
+
 CREATE TABLE crimes (
     row_id BIGINT PRIMARY KEY,  -- Unique identifier for each row
     incident_id INT,           -- System-generated identifier for incident reports
@@ -24,7 +27,8 @@ CREATE TABLE crimes (
     supervisor_district INT,   -- Supervisor district number
     latitude FLOAT,            -- Latitude coordinate
     longitude FLOAT,           -- Longitude coordinate
-    point TEXT                 -- Point geometry for mapping features
+    --point POINT                 -- Point geometry for mapping features
+    point geometry(Point, 4326)
 );
 
 -- Index for incident_id (Primary Key)
@@ -34,22 +38,10 @@ CREATE INDEX idx_incident_id ON crimes (incident_id);
 CREATE INDEX idx_incident_datetime ON crimes (incident_datetime);
 
 -- Compound Index for police_district and resolution
-CREATE INDEX idx_analysis_neighborhood_resolution ON crimes (police_district, resolution);
+CREATE INDEX idx_police_district_resolution ON crimes (police_district, resolution);
 
 -- Compound Index for analysis_neighborhood and incident_datetime for the neighborhood_incidents view column
-CREATE INDEX idx_neighborhood_datetime ON crimes (analysis_neighborhood, incident_datetime);
-
-
---Optionals:
-
--- Install pg_trgm extension (if not already installed)
-CREATE EXTENSION IF NOT EXISTS pg_trgm;
-
--- GIN Index for incident_categories (only if frequently queried)
-CREATE INDEX idx_gin_incident_categories ON crimes USING GIN (incident_category gin_trgm_ops);
-
--- Install PostGIS extension (if not already installed)
-CREATE EXTENSION IF NOT EXISTS postgis;
+CREATE INDEX idx_analysis_neighborhood ON crimes (analysis_neighborhood);
 
 -- Create a geospatial index on the point column
-CREATE INDEX idx_geospatial_point ON crimes USING GIST (point gist_trgm_ops);
+CREATE INDEX idx_geospatial_point ON crimes USING GIST (point);

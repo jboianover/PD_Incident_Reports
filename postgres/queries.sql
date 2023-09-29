@@ -1,3 +1,4 @@
+--Review if it's not incident_id instead of incident_number
 --How many burglaries occurred in the South of Market neighborhood between 2018-05-01 and 2018-05-31 inclusive?
 select 
 COUNT(DISTINCT incident_number) 

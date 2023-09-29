@@ -35,5 +35,6 @@
              "report_datetime", "report_type_code", "report_type_description", "filed_online",
              "incident_code", "incident_category", "incident_subcategory", "incident_description",
              "resolution", "intersection", "cnn", "police_district", "analysis_neighborhood",
-             "supervisor_district", "latitude", "longitude", "point"]
+             "supervisor_district", "latitude", "longitude", "point"],
+    "view_sql": "postgres/view.sql"
 }
